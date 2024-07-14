@@ -1,0 +1,19 @@
+#pragma once
+
+#include "Shader.h"
+#include "Sprite.h"
+#include <memory>
+
+class SpriteRenderer
+{
+public:
+    SpriteRenderer();
+    ~SpriteRenderer(){};
+
+    void Draw(const Sprite &sprite) const;
+    void InitRenderData(unsigned int width, unsigned int height);
+
+private:
+    std::unique_ptr<Shader> spriteShader;
+    unsigned int quadVAO;
+};
