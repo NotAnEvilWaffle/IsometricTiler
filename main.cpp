@@ -1,66 +1,63 @@
+#include "Game.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
-#include "Game.h"
-#include "Graphics/Shader.h"
-#include "Input/Input.h"
+#include "NAGGL/SpriteRenderer.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 
-int main()
-{
+int main() {
 
-    glfwInit();
-    GLFWwindow *window = glfwCreateWindow(800, 600, "OpenGL Learning", nullptr, nullptr);
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    
-    Input::Instance().SetWindow(window);
+  glfwInit();
+  GLFWwindow *window = glfwCreateWindow(800, 600, "Isometric Tiler", nullptr, nullptr);
+  glfwMakeContextCurrent(window);
+  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+  gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  // Input::Instance().SetWindow(window);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    Game test(800, 600);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    test.Init();
+  Game test(800, 600);
 
-    float deltaTime = 0.0f;
-    float lastFrame = 0.0f;
+  test.Init();
 
-    while (!glfwWindowShouldClose(window))
-    {
-        float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-        glfwPollEvents();
+  naggl::SpriteRenderer SpriteRenderer = naggl::SpriteRenderer();
+  SpriteRenderer.InitRenderData(800, 600);
 
-        processInput(window);
+  float deltaTime = 0.0f;
+  float lastFrame = 0.0f;
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+  while (!glfwWindowShouldClose(window)) {
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    glfwPollEvents();
 
-        test.ProcessInput();
-        test.Update(deltaTime);
-        test.Render();
+    processInput(window);
 
-        glfwSwapBuffers(window);
-    }
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-    glfwTerminate();
-    return 0;
+    test.ProcessInput();
+    test.Update(deltaTime);
+    test.Render();
+
+    glfwSwapBuffers(window);
+  }
+
+  glfwTerminate();
+  return 0;
 }
 
-void processInput(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+void processInput(GLFWwindow *window) {
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, true);
 }
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height)
-{
-    glViewport(0, 0, width, height);
+void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+  glViewport(0, 0, width, height);
 }
