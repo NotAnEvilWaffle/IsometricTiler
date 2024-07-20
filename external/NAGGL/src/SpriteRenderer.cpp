@@ -6,7 +6,7 @@
 namespace naggl {
 
   SpriteRenderer::SpriteRenderer() {
-    this->spriteShader = std::make_unique<Shader>("Graphics/shader.vert", "Graphics/shader.frag");
+    this->spriteShader = std::make_unique<Shader>("shaders/shader.vert", "shaders/shader.frag");
   }
 
   void SpriteRenderer::Draw(const Sprite &sprite) const {
