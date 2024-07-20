@@ -5,13 +5,11 @@ project(IsometricTiler)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_subdirectory(libraries)
+add_subdirectory(external)
+add_subdirectory(src)
+
+add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
 
 
-set(SOURCE_FILES glad.c main.cpp Game.cpp)
+target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC IsometricTilerSources)
 
-add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
-
-target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC GL dl glfw glm naggl)
-
-message(STATUS "finished building project files")

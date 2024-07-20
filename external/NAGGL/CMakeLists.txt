@@ -2,7 +2,7 @@ project(naggl VERSION 0.1.0 DESCRIPTION "not a good game library")
 
 
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
 
 set(SOURCE_FILES
     ${SRC_DIR}/Input.cpp
