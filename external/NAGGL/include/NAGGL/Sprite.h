@@ -10,11 +10,11 @@ namespace naggl {
   class Sprite {
 
   public:
-    Sprite() : texture(), position({0, 0}), scale({1, 1}), angle(0.0f){};
+    Sprite() : texture(nullptr), position({0, 0}), scale({1, 1}), angle(0.0f){};
 
-    Sprite(const std::shared_ptr<Texture> &texture) : texture(texture), position({0, 0}), scale({1, 1}), angle(0.0f){};
+    Sprite(const Texture *texture) : texture(texture), position({0, 0}), scale({1, 1}), angle(0.0f){};
 
-    Sprite(const std::shared_ptr<Texture> &texture, glm::vec2 position, glm::vec2 scale, float angle)
+    Sprite(const Texture *texture, glm::vec2 position, glm::vec2 scale, float angle)
         : texture(texture), position(position), scale(scale), angle(angle){};
 
     Sprite(const Sprite &sprite)
@@ -33,7 +33,7 @@ namespace naggl {
     ~Sprite(){};
 
   private:
-    std::shared_ptr<Texture> texture;
+    const Texture *texture;
     glm::vec2 position;
     glm::vec2 scale;
     float angle;

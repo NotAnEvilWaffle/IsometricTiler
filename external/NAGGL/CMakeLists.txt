@@ -10,6 +10,7 @@ set(SOURCE_FILES
     ${SRC_DIR}/Sprite.cpp
     ${SRC_DIR}/SpriteRenderer.cpp
     ${SRC_DIR}/Texture.cpp
+    ${SRC_DIR}/ResourceManager.cpp
     ${LIB_DIR}/stb_image/stb_image.cpp
 )
 
