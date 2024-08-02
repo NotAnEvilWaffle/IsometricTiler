@@ -10,9 +10,12 @@ Chunk::Chunk(glm::vec2 position) : screenPosition(position) {
   for (int x = 0; x < chunkSize.x; x++) {
     cells[x].reserve(chunkSize.y);
     for (int y = 0; y < chunkSize.y; y++) {
+      int isoCellX = (x * 0.5 * cellSize) + (y * -0.5 * cellSize);
+      int isoCellY = (x * 0.25 * cellSize) + (y * 0.25 * cellSize);
 
-      int cellX = (position.x * (chunkSize.x * cellSize)) + (x * cellSize) + (cellSize * 0.5);
-      int cellY = (position.y * (chunkSize.y * cellSize)) + (y * cellSize) + (cellSize * 0.5);
+      // Adjust by chunk position
+      int cellX = (position.x * (chunkSize.x * cellSize)) + isoCellX + (cellSize * 0.5);
+      int cellY = (position.y * (chunkSize.y * cellSize)) + isoCellY + (cellSize * 0.5);
       Cell newCell(cellX, cellY, naggl::ResourceManager::GetTexture("block"));
       cells[x].push_back(newCell);
       glm::uvec2 coords(x, y);
