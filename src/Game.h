@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NAGGL/SpriteRenderer.h"
+#include "World/World.h"
 #include <memory>
 
 class Game {
@@ -15,4 +16,5 @@ public:
 
 private:
   std::unique_ptr<naggl::SpriteRenderer> spriteRenderer;
+  World *world;
 };

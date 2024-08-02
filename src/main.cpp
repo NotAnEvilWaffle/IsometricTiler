@@ -1,7 +1,6 @@
 #include "Game.h"
-#include "NAGGL/ResourceManager.h"
-#include "NAGGL/Sprite.h"
 #include "NAGGL/Texture.h"
+#include <cmath>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <NAGGL/SpriteRenderer.h>
@@ -26,20 +25,13 @@ int main() {
 
   Game test(800, 600);
 
-  test.Init();
-
-  naggl::SpriteRenderer SpriteRenderer = naggl::SpriteRenderer();
-  SpriteRenderer.InitRenderData(800, 600);
-
-  naggl::ResourceManager::LoadTexture("textures/block.png", "block");
-
-  naggl::Sprite sprite(naggl::ResourceManager::GetTexture("block"), {400, 300}, {500, 500}, 0);
-
   float deltaTime = 0.0f;
   float lastFrame = 0.0f;
 
   while (!glfwWindowShouldClose(window)) {
+
     float currentFrame = glfwGetTime();
+
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     glfwPollEvents();
@@ -52,8 +44,6 @@ int main() {
     test.ProcessInput();
     test.Update(deltaTime);
     test.Render();
-
-    SpriteRenderer.Draw(sprite);
 
     glfwSwapBuffers(window);
   }
