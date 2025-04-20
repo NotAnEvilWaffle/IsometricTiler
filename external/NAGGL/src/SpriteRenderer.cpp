@@ -5,9 +5,11 @@
 
 namespace naggl {
 
-  SpriteRenderer::SpriteRenderer() {
+  SpriteRenderer::SpriteRenderer() : viewMatrix(glm::mat4(1.0f)) {
     this->spriteShader = std::make_unique<Shader>("shaders/shader.vert", "shaders/shader.frag");
   }
+
+  void SpriteRenderer::SetViewMatrix(const glm::mat4 &viewMatrix) { this->viewMatrix = viewMatrix; }
 
   void SpriteRenderer::Draw(const Sprite &sprite) const {
     this->spriteShader->Use();
@@ -16,6 +18,7 @@ namespace naggl {
     model = glm::rotate(model, glm::radians(sprite.GetAngle()), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::scale(model, glm::vec3(sprite.GetScale(), 1.0f));
 
+    this->spriteShader->SetMat4("view", viewMatrix);
     this->spriteShader->SetMat4("model", model);
 
     sprite.BindTexture(GL_TEXTURE0);
@@ -31,7 +34,7 @@ namespace naggl {
 
     this->spriteShader->Use();
     this->spriteShader->SetInt("image", 0);
-    auto projection = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
+    auto projection = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 100.0f);
     this->spriteShader->SetMat4("projection", projection);
 
     // Set vertices such that origin is center of quad

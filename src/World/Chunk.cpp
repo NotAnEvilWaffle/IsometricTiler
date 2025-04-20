@@ -7,20 +7,30 @@ Chunk::Chunk(glm::vec2 position) : screenPosition(position) {
 
   cells.resize(chunkSize.x);
 
+  glm::vec2 chunkIsoCoords =
+      GridToIsometricCoords(position.x, position.y, (float)chunkSize.x * (float)cellSize);
+
   for (int x = 0; x < chunkSize.x; x++) {
     cells[x].reserve(chunkSize.y);
     for (int y = 0; y < chunkSize.y; y++) {
-      int isoCellX = (x * 0.5 * cellSize) + (y * -0.5 * cellSize);
-      int isoCellY = (x * 0.25 * cellSize) + (y * 0.25 * cellSize);
+
+      glm::vec2 isometricCellCoords = GridToIsometricCoords(x, y, cellSize);
 
       // Adjust by chunk position
-      int cellX = (position.x * (chunkSize.x * cellSize)) + isoCellX + (cellSize * 0.5);
-      int cellY = (position.y * (chunkSize.y * cellSize)) + isoCellY + (cellSize * 0.5);
+      int cellX = chunkIsoCoords.x + isometricCellCoords.x + (cellSize * 0.5);
+      int cellY = chunkIsoCoords.y + isometricCellCoords.y + (cellSize * 0.5);
       Cell newCell(cellX, cellY, naggl::ResourceManager::GetTexture("block"));
       cells[x].push_back(newCell);
       glm::uvec2 coords(x, y);
     }
   }
+}
+
+glm::vec2 Chunk::GridToIsometricCoords(float x, float y, float sizeOffset) {
+  glm::vec2 coords;
+  coords.x = (x * 0.5 * sizeOffset) + (y * -0.5 * sizeOffset);
+  coords.y = (x * 0.25 * sizeOffset) + (y * 0.25 * sizeOffset);
+  return coords;
 }
 
 void Chunk::Draw(naggl::SpriteRenderer &renderer) {

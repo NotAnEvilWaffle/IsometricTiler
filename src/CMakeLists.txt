@@ -3,6 +3,7 @@ add_library(IsometricTilerSources
   glad.c
   World/World.cpp
   World/Chunk.cpp
+  Camera.cpp
 )
 
 target_link_libraries(IsometricTilerSources PUBLIC GL dl glfw glm naggl)

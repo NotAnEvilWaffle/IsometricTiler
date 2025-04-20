@@ -35,4 +35,6 @@ private:
   glm::vec2 screenPosition;
   const glm::ivec2 chunkSize = {3, 3};
   const int cellSize = 100;
+
+  glm::vec2 GridToIsometricCoords(float x, float y, float sizeOffset);
 };
